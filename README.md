@@ -1,13 +1,13 @@
 <p align="center"><img src="docs/banner.svg" alt="TrainLens — training, in focus" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/Yangtao666China/trainlens/actions/workflows/tests.yml"><img src="https://github.com/Yangtao666China/trainlens/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="https://github.com/Yangtao666China/training-log-visualizer/actions/workflows/tests.yml"><img src="https://github.com/Yangtao666China/training-log-visualizer/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <img src="https://img.shields.io/badge/Python-3.10%2B-2563eb" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Core-zero_dependencies-0d8063" alt="Zero runtime dependencies">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-slategray" alt="MIT license"></a>
 </p>
 
-<h3 align="center">训练结束之后，让 CSV 说清楚发生了什么。</h3>
+<h1 align="center">训练日志可视化：CSV 转离线报告</h1>
 <p align="center">Turn training logs into a self-contained, interactive HTML report.</p>
 
 选择几份训练日志，生成一份离线可用的报告：对比曲线、切换指标、显示平滑曲线、检查最优轮次，再导出原始指标摘要。核心只使用 Python 标准库，报告不依赖 CDN、账号或服务器。
@@ -84,7 +84,7 @@ python -m unittest discover -s tests -v
 
 ## 与其他项目一起用
 
-[Tiny Autograd Lab](https://github.com/Yangtao666China/tiny-autograd-lab) 的 `history.csv` 使用兼容格式。复制多个实验的日志并分别命名，就可以比较学习率、网络大小或随机种子。
+[Tiny Autograd Lab](https://github.com/Yangtao666China/autograd-from-scratch) 的 `history.csv` 使用兼容格式。复制多个实验的日志并分别命名，就可以比较学习率、网络大小或随机种子。
 
 ## 设计与限制
 

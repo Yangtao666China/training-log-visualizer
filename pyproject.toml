@@ -16,8 +16,8 @@ dependencies = []
 example = ["numpy>=1.26,<3"]
 
 [project.urls]
-Repository = "https://github.com/Yangtao666China/trainlens"
-Issues = "https://github.com/Yangtao666China/trainlens/issues"
+Repository = "https://github.com/Yangtao666China/training-log-visualizer"
+Issues = "https://github.com/Yangtao666China/training-log-visualizer/issues"
 
 [project.scripts]
 trainlens = "trainlens.__main__:main"
