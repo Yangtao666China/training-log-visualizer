@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trainlens"
+version = "0.1.0"
+description = "Turn training CSV logs into interactive, offline HTML reports. Zero core dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Yangtao666China"}]
+dependencies = []
+
+[project.optional-dependencies]
+example = ["numpy>=1.26,<3"]
+
+[project.urls]
+Repository = "https://github.com/Yangtao666China/trainlens"
+Issues = "https://github.com/Yangtao666China/trainlens/issues"
+
+[project.scripts]
+trainlens = "trainlens.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["trainlens*"]
+
+[tool.setuptools.package-data]
+trainlens = ["template.html"]

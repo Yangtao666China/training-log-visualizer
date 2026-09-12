@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__REPORT_TITLE__ · TrainLens</title>
+<style>
+:root{font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;color:#152b37;background:#f5f7f6;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}main{max-width:1240px;margin:auto;padding:34px 36px 60px}
+header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dce4df;padding-bottom:22px}
+.brand{font-size:20px;font-weight:800;letter-spacing:-.8px}.mark{display:inline-grid;place-items:center;background:#0d6b53;color:white;width:32px;height:32px;border-radius:9px;margin-right:10px}
+.tag{font-size:11px;letter-spacing:1.5px;color:#546a60}.eyebrow{color:#0d6b53;font-size:12px;letter-spacing:2px;font-weight:700;margin:40px 0 14px}
+h1{font-size:clamp(30px,4vw,48px);letter-spacing:-2px;margin:0 0 12px;font-weight:650}p{color:#64766d;line-height:1.7;margin:0}.hero{margin-bottom:28px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:26px}.stat{background:#fff;border:1px solid #dce4df;border-radius:12px;padding:20px 22px}.label{font-size:12px;color:#64766d}.value{font-size:30px;font-weight:650;letter-spacing:-1px;margin-top:9px;overflow-wrap:anywhere}.sub{font-size:12px;margin-top:6px;color:#64766d}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px}.panel{background:white;border:1px solid #dce4df;border-radius:12px;padding:22px}h2{font-size:15px;margin:0 0 20px}.run{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:18px;overflow-wrap:anywhere;cursor:pointer}.run input{accent-color:#0d6b53}.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.control{display:block;font-size:12px;color:#64766d;margin:24px 0 8px}select{width:100%;padding:9px;border:1px solid #dce4df;border-radius:6px;background:white;color:#152b37}input[type=range]{width:100%;accent-color:#0d6b53}.note{font-size:11px;color:#64766d;line-height:1.7;margin-top:22px}.chart-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.chart-head h2{margin-bottom:0}.pill{background:#edf5f0;color:#0d6b53;padding:6px 10px;border-radius:20px;font-size:11px}svg{width:100%;height:auto;display:block;margin-top:20px}.gridline{stroke:#e8eeea;stroke-width:1}.tick{font-size:11px;fill:#74867c}.curve{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.table-panel{margin-top:20px;overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap}th{text-align:left;font-size:11px;color:#64766d;font-weight:500;border-bottom:1px solid #e1e8e3;padding:12px}td{padding:16px 12px;border-bottom:1px solid #eef2ef}tbody tr:last-child td{border-bottom:0}.best{color:#0d6b53;font-weight:700}.table-head{display:flex;justify-content:space-between;align-items:center;gap:20px}.table-head select{max-width:240px;font-size:12px}.table-head h2{margin:0}footer{display:flex;justify-content:space-between;gap:15px;margin-top:25px;font-size:11px;color:#74867c}.empty{fill:#64766d;font-size:16px}button{background:#0d6b53;color:white;border:0;border-radius:7px;padding:9px 13px;cursor:pointer;font:inherit;font-size:12px}
+@media(max-width:740px){main{padding:22px 16px}.layout{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:14px}.value{font-size:22px}.tag{display:none}.table-head{align-items:flex-start}.panel{padding:16px}footer{flex-direction:column}}
+</style>
+</head>
+<body><main>
+<header><div class="brand"><span class="mark">↗</span>TrainLens</div><div class="tag">LOCAL DATA. CLEARER EXPERIMENTS.</div><button id="download">导出摘要 JSON</button></header>
+<section class="hero"><div class="eyebrow">EXPERIMENT REPORT / 实验对比</div><h1>__REPORT_TITLE__</h1><p>让每一次训练都有据可查。筛选实验、检查曲线，再回到原始指标做判断。</p></section>
+<section class="stats"><div class="stat"><div class="label">载入的实验 / RUNS</div><div class="value" id="count"></div><div class="sub" id="epochs"></div></div><div class="stat"><div class="label">最优实验 / BEST RUN</div><div class="value" id="winner"></div><div class="sub" id="criterion"></div></div><div class="stat"><div class="label">最优指标 / BEST VALUE</div><div class="value" id="bestValue"></div><div class="sub" id="bestEpoch"></div></div></section>
+<section class="layout"><aside class="panel"><h2>显示设置</h2><div id="runs"></div><label class="control" for="metric">曲线指标</label><select id="metric"></select><label class="control" for="smooth">指数平滑 <span id="smoothValue">0.00</span></label><input id="smooth" type="range" min="0" max="0.95" step="0.05" value="0"><p class="note">平滑只改变曲线显示；顶部卡片、表格和最优轮次始终使用全部实验的原始数值。取消勾选只隐藏曲线。</p></aside>
+<div class="panel"><div class="chart-head"><h2 id="chartTitle">Validation loss</h2><span class="pill">离线报告 · 无外部请求</span></div><svg id="chart" viewBox="0 0 850 370" role="img" aria-label="所选实验的训练曲线"><title>训练曲线</title></svg><p class="note">横轴：Epoch · 悬停曲线上的采样点，查看该轮原始值与显示值。</p></div></section>
+<section class="panel table-panel"><div class="table-head"><h2>实验摘要</h2><select id="sort" aria-label="表格排序"><option value="best">按最优指标排序</option><option value="name">按名称排序</option></select></div><table><thead><tr><th>实验</th><th>记录轮数</th><th>最优轮次</th><th id="metricHeader">最优指标</th><th>最终验证损失</th><th>最优轮次损失差</th></tr></thead><tbody id="summary"></tbody></table><p class="note">损失差 = 验证损失 − 训练损失。它是排查线索，单独一个差值不能证明过拟合。相同最优值取首次出现的轮次。</p></section>
+<footer><span>TrainLens / Built for small, reproducible experiments.</span><span>报告仅比较提供的日志；不推断统计显著性或未记录的测试集表现。</span></footer>
+</main><script id="data" type="application/json">__REPORT_DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('data').textContent);
+const $=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
+const colors=['#0d8063','#ed9041','#5476cf','#b35a8a','#5aabb0','#8874b0'];
+const names={train_loss:'Training loss',val_loss:'Validation loss',train_acc:'Training accuracy',val_acc:'Validation accuracy'};
+const visible=new Set(data.runs.map((_,i)=>i));
+const ranked=[...data.summaries].sort((a,b)=>data.mode==='min'?a.best_value-b.best_value:b.best_value-a.best_value);
+const winner=ranked[0];
+$('count').textContent=String(data.runs.length).padStart(2,'0');
+$('epochs').textContent=data.runs.reduce((n,r)=>n+r.rows.length,0)+' 条有效训练记录';
+$('winner').textContent=winner.name;$('criterion').textContent=data.metric+' / '+data.mode;
+$('bestValue').textContent=winner.best_value.toFixed(4);$('bestEpoch').textContent='Epoch '+winner.best_epoch+' · 原始数据';
+$('metricHeader').textContent='最优 '+data.metric;
+data.runs.forEach((run,i)=>{const label=document.createElement('label');label.className='run';const input=document.createElement('input');input.type='checkbox';input.checked=true;input.addEventListener('change',()=>{input.checked?visible.add(i):visible.delete(i);draw()});const dot=document.createElement('span');dot.className='dot';dot.style.background=colors[i%colors.length];const text=document.createElement('span');text.textContent=run.name;label.append(input,dot,text);$('runs').append(label)});
+Object.keys(names).filter(m=>data.runs.some(r=>r.metrics.includes(m))).forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=names[m];$('metric').append(o)});$('metric').value=data.metric;
+function element(type,attrs,text){const node=document.createElementNS(ns,type);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,String(v)));if(text!==undefined)node.textContent=text;return node}
+function draw(){const svg=$('chart');svg.replaceChildren(element('title',{},'所选实验的训练曲线'));const metric=$('metric').value,beta=Number($('smooth').value);$('smoothValue').textContent=beta.toFixed(2);$('chartTitle').textContent=names[metric];const series=data.runs.flatMap((run,i)=>{if(!visible.has(i)||!run.metrics.includes(metric))return [];let prev=run.rows[0][metric];return [{run,i,points:run.rows.map((r,index)=>{prev=index?beta*prev+(1-beta)*r[metric]:r[metric];return {x:r.epoch,y:prev,raw:r[metric]}})}]});if(!series.length){svg.append(element('text',{x:425,y:180,'text-anchor':'middle',class:'empty'},'选择至少一个包含此指标的实验'));return}
+let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity;series.forEach(s=>s.points.forEach(p=>{xmin=Math.min(xmin,p.x);xmax=Math.max(xmax,p.x);ymin=Math.min(ymin,p.y);ymax=Math.max(ymax,p.y)}));if(xmin===xmax)xmax=xmin+1;const pad=Math.max((ymax-ymin)*.1,1e-5);ymin-=pad;ymax+=pad;
+const x=v=>64+(v-xmin)/(xmax-xmin)*752,y=v=>320-(v-ymin)/(ymax-ymin)*282;
+for(let i=0;i<=5;i++){const val=ymin+(ymax-ymin)*i/5,yy=y(val);svg.append(element('line',{x1:64,x2:816,y1:yy,y2:yy,class:'gridline'}),element('text',{x:53,y:yy+4,'text-anchor':'end',class:'tick'},val.toFixed(3)));const xx=64+752*i/5;svg.append(element('text',{x:xx,y:345,'text-anchor':'middle',class:'tick'},String(Math.round(xmin+(xmax-xmin)*i/5))))}
+series.forEach(s=>{const color=colors[s.i%colors.length];svg.append(element('path',{d:s.points.map((p,i)=>(i?'L':'M')+x(p.x).toFixed(2)+','+y(p.y).toFixed(2)).join(' '),stroke:color,class:'curve'}));const step=Math.max(1,Math.ceil(s.points.length/90));s.points.forEach((p,i)=>{if(i%step&&i!==s.points.length-1)return;const circle=element('circle',{cx:x(p.x),cy:y(p.y),r:s.points.length===1?4:5,fill:color,'fill-opacity':s.points.length===1?1:.02});circle.append(element('title',{},`${s.run.name} · Epoch ${p.x}\n原始: ${p.raw.toFixed(6)}\n显示: ${p.y.toFixed(6)}`));svg.append(circle)})})}
+function table(){const rows=$('sort').value==='name'?[...data.summaries].sort((a,b)=>a.name.localeCompare(b.name)):ranked;$('summary').replaceChildren();rows.forEach(r=>{const tr=document.createElement('tr');[r.name,r.epochs_logged,r.best_epoch,r.best_value.toFixed(5),r.final_val_loss.toFixed(5),(r.gap_at_best>=0?'+':'')+r.gap_at_best.toFixed(5)].forEach((value,i)=>{const td=document.createElement('td');td.textContent=value;if(r===winner&&(i===0||i===3))td.className='best';tr.append(td)});$('summary').append(tr)})}
+$('metric').addEventListener('change',draw);$('smooth').addEventListener('input',draw);$('sort').addEventListener('change',table);
+$('download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(data.summaries,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='trainlens-summary.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});draw();table();
+</script></body></html>

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "adam",
+    "epochs_logged": 120,
+    "best_epoch": 47,
+    "selection_metric": "val_loss",
+    "selection_mode": "min",
+    "best_value": 0.4359017972782304,
+    "final_val_loss": 0.4426677727384917,
+    "gap_at_best": -0.0022017617981204274
+  },
+  {
+    "name": "momentum",
+    "epochs_logged": 120,
+    "best_epoch": 120,
+    "selection_metric": "val_loss",
+    "selection_mode": "min",
+    "best_value": 0.44323488371503034,
+    "final_val_loss": 0.44323488371503034,
+    "gap_at_best": 0.008909225224721373
+  },
+  {
+    "name": "sgd",
+    "epochs_logged": 120,
+    "best_epoch": 120,
+    "selection_metric": "val_loss",
+    "selection_mode": "min",
+    "best_value": 0.5279497367278129,
+    "final_val_loss": 0.5279497367278129,
+    "gap_at_best": 0.009390075383615137
+  }
+]
